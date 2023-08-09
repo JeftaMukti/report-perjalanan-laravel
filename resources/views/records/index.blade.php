@@ -2,7 +2,7 @@
 
 @section('content')
     <h1 class='container'>Laporan</h1>
-    
+    <div class="container">
     <th><a href="{{ route('records.index', ['sort_by' => 'date', 'sort_order' => $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Date</a></th>
             <th><a href="{{ route('records.index', ['sort_by' => 'temperature', 'sort_order' => $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Temperature</a></th>
             <th><a href="{{ route('records.index', ['sort_by' => 'time', 'sort_order' => $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Time</a></th>
@@ -33,4 +33,5 @@
     </table>
 
     <a href="{{ route('records.create') }}">Add New Record</a>
+    </div>  
 @endsection

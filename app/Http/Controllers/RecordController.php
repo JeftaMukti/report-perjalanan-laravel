@@ -11,17 +11,18 @@ class RecordController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        //
-        $records = Record::orderBy('date')->orderBy('time')->orderBy('temperature')->get();
+{
+    $sortBy = $request->get('sort_by', 'date');
+    $sortOrder = $request->get('sort_order', 'asc');
 
-        $sortBy = $request->get('sort_by', 'date');
-        $sortOrder = $request->get('sort_order', 'asc');
+    // Fetch only records associated with the authenticated user
+    $records = Record::where('user_id', auth()->user()->id)
+        ->orderBy($sortBy, $sortOrder)
+        ->get();
 
-        $records = Record::orderBy($sortBy, $sortOrder)->get();
+    return view('records.index', compact('records', 'sortBy', 'sortOrder'));
+}
 
-        return view('records.index', compact('records', 'sortBy', 'sortOrder'));
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -51,9 +52,12 @@ class RecordController extends Controller
             'location' => $request->input('location'),
             'temperature' => $request->input('temperature')
         ]);
-
+    
+        // Associate the record with the authenticated user
+        $record->user_id = auth()->user()->id;
+    
         $record->save();
-        return redirect()->route('records.index')->with('success','barang berhasil di simpan');
+        return redirect()->route('records.index')->with('success', 'Record created successfully');
     }
 
     /**
