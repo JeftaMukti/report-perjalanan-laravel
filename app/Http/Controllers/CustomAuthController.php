@@ -60,7 +60,7 @@ class CustomAuthController extends Controller
             return view('page', compact('name'));
         }
 
-        return redirect('login')->withSuccess('your not allowed to access');
+        return redirect('login')->with('success','your not allowed to access');
     }
 
     public function signOut(){

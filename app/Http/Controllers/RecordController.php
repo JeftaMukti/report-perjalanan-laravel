@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Record;
+use Carbon\Carbon;
 
 class RecordController extends Controller
 {
@@ -11,17 +12,20 @@ class RecordController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    $sortBy = $request->get('sort_by', 'date');
-    $sortOrder = $request->get('sort_order', 'asc');
-
-    // Fetch only records associated with the authenticated user
-    $records = Record::where('user_id', auth()->user()->id)
-        ->orderBy($sortBy, $sortOrder)
-        ->get();
-
-    return view('records.index', compact('records', 'sortBy', 'sortOrder'));
-}
+    {
+        $sortBy = $request->get('sort_by', 'date');
+        $sortOrder = $request->get('sort_order', 'asc');
+    
+        // Fetch only records associated with the authenticated user and for the present day
+        $presentDate = Carbon::now()->toDateString();
+        $records = Record::where('user_id', auth()->user()->id)
+            ->whereDate('date', $presentDate) // Filter for present day
+            ->orderBy($sortBy, $sortOrder)
+            ->paginate(5); // Use paginate here, not get()
+    
+        return view('records.index', compact('records', 'sortBy', 'sortOrder'));
+    }
+    
 
 
     /**
@@ -40,14 +44,13 @@ class RecordController extends Controller
     {
         //
         $request->validate([
-            'date' => 'required',
             'time' => 'required',
             'location' => 'required',
             'temperature' => 'required'
         ]);
 
         $record = new Record([
-            'date' => $request->input('date'),
+            'date' => Carbon::now()->toDateString(),
             'time' => $request->input('time'),
             'location' => $request->input('location'),
             'temperature' => $request->input('temperature')
@@ -57,7 +60,9 @@ class RecordController extends Controller
         $record->user_id = auth()->user()->id;
     
         $record->save();
-        return redirect()->route('records.index')->with('success', 'Record created successfully');
+        session()->flash('success', 'Record create successfully');
+        return redirect()->route('records.index');
+        
     }
 
     /**
@@ -102,7 +107,7 @@ class RecordController extends Controller
         $record->save();
     
         // Flash a success message to be displayed on the redirected page
-        Session()->flash('success', 'Record updated successfully');
+        session()->flash('success', 'Record updated successfully');
     
         return redirect()->route('records.index');
     }

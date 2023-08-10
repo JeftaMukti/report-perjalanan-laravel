@@ -4,16 +4,18 @@
 <div class="container">
     <h1>Add New Record</h1>
 
+    
+
     <form action="{{ route('records.store') }}" method="post">
         @csrf
         <div class="form-group">
             <label for="date">Date:</label>
-            <input type="date" class="form-control" name="date" id="date" required>
+            <input class="form-control" type= "date" name="date" id="date" max="{{ now()->toDateString() }}" min="{{ now()->toDateString() }}" required>
         </div>
 
         <div class="form-group">
             <label for="time">Time:</label>
-            <input type="time" class="form-control" name="time" id="time" required>
+            <input type="time" class="form-control" name="time" id="time" min="{{ now()->toTimeString() }}" required>
         </div>
 
         <div class="form-group">
@@ -28,7 +30,7 @@
 
         <button type="submit" class="btn btn-primary">Add Record</button>
     </form>
-
+    
     <a href="{{ route('records.index') }}" class="mt-3 btn btn-secondary">Back to Records</a>
 </div>
-@endsection
+@endsection 

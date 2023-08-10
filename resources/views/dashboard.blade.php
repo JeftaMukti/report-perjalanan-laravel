@@ -37,6 +37,23 @@
             </div>
         </div>
     </nav>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dateInput = document.querySelector('input[name="date"]');
+        
+        dateInput.addEventListener('input', function () {
+            const selectedDate = new Date(this.value);
+            const today = new Date();
+            
+            if (selectedDate > today) {
+                this.setCustomValidity("Please select a date that is not in the future.");
+            } else {
+                this.setCustomValidity("");
+            }
+        });
+    });
+</script>
+
     @yield('content')
 </body>
 </html>
