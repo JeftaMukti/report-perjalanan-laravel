@@ -6,21 +6,29 @@
 
     <form action="{{ route('records.store') }}" method="post">
         @csrf
-        <label for="date">Date:</label>
-        <input type="date" name="date" id="date" required><br>
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" class="form-control" name="date" id="date" required>
+        </div>
 
-        <label for="time">Time:</label>
-        <input type="time" name="time" id="time" required><br>
+        <div class="form-group">
+            <label for="time">Time:</label>
+            <input type="time" class="form-control" name="time" id="time" required>
+        </div>
 
-        <label for="location">Location:</label>
-        <input type="text" name="location" id="location" required><br>
+        <div class="form-group">
+            <label for="location">Location:</label>
+            <input type="text" class="form-control" name="location" id="location" required>
+        </div>
 
-        <label for="temperature">Temperature:</label>
-        <input type="number" step="1" name="temperature" id="temperature" required><br>
+        <div class="form-group">
+            <label for="temperature">Temperature:</label>
+            <input type="number" step="1" class="form-control" name="temperature" id="temperature" required>
+        </div>
 
-        <button type="submit">Add Record</button>
+        <button type="submit" class="btn btn-primary">Add Record</button>
     </form>
 
-    <a href="{{ route('records.index') }}">Back to Records</a>
-    </div>
+    <a href="{{ route('records.index') }}" class="mt-3 btn btn-secondary">Back to Records</a>
+</div>
 @endsection
