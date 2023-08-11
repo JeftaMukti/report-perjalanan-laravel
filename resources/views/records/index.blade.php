@@ -8,12 +8,14 @@
     </div>
     @endif
     <div class="container">
-        <table class="table table-striped">
-            <tr>
-                <th><a class="mb-2 mt-3 btn btn-success" href="{{ route('records.index', ['sort_by' => 'date', 'sort_order' => $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Date</a></th>
+    <th><a class="mb-2 mt-3 btn btn-success" href="{{ route('records.index', ['sort_by' => 'date', 'sort_order' => $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Date</a></th>
                 <th><a class="mb-2 mt-3 btn btn-secondary" href="{{ route('records.index', ['sort_by' => 'temperature', 'sort_order' => $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Temperature</a></th>
                 <th><a class="mb-2 mt-3 btn btn-info" href="{{ route('records.index', ['sort_by' => 'time', 'sort_order' => $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Time</a></th>
-                <br>
+        <table class="table table-striped">
+            <tr>
+                <th>Date</th>
+                <th>Temperature</th>
+                <th>Time</th>
                 <th>Location</th>
                 <th>Action</th>
             </tr>
